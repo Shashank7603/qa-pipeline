@@ -1,24 +1,42 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-import time
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-# Set the path to your ChromeDriver
+# Set the path to your ChromeDriver (ensure it's correct)
 chrome_driver_path = "/usr/bin/chromedriver"
 
+# Initialize WebDriver
 driver = webdriver.Chrome(service=Service(chrome_driver_path))
+
+# Navigate to the URL
 driver.get("http://127.0.0.1:54069")
 
 try:
-    next_button = driver.find_element(By.ID, "next_page")
+    # Wait for the next button to be clickable, then click it
+    next_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.ID, "next_page"))
+    )
     next_button.click()
-    time.sleep(2)
-    assert "Page 2" in driver.page_source
 
-    sort_button = driver.find_element(By.ID, "sort_by_name")
+    # Wait for the next page to load and assert the page title or content
+    WebDriverWait(driver, 10).until(
+        EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "Page 2")
+    )
+
+    # Wait for the sort button to be clickable, then click it
+    sort_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.ID, "sort_by_name"))
+    )
     sort_button.click()
-    time.sleep(2)
-    assert "Sorted by Name" in driver.page_source
+
+    # Wait for the sorted page to load and assert the content
+    WebDriverWait(driver, 10).until(
+        EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "Sorted by Name")
+    )
 
 finally:
+    # Close the browser after the operations are done
     driver.quit()
