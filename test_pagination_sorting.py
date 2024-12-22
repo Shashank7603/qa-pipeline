@@ -19,9 +19,8 @@ chrome_options.add_argument("--remote-debugging-port=9222")  # Enable remote deb
 driver = webdriver.Chrome(service=Service(chrome_driver_path), options=chrome_options)
 
 # Navigate to the URL
-#driver.get("http://127.0.0.1:54069")
-driver.get("https://www.google.com")
-print(driver.title)  # Should print "Google"
+driver.get("http://127.0.0.1:54069")
+
 
 try:
     # Wait for the next button to be clickable, then click it
