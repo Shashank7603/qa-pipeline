@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 import time
 
 # Set the path to your ChromeDriver
-chrome_driver_path = "C:/Users/MANVI SINGH/Downloads/chromedriver-win64/chromedriver-win64/chromedriver.exe"
+chrome_driver_path = "/usr/bin/chromedriver"
 
 driver = webdriver.Chrome(service=Service(chrome_driver_path))
 driver.get("http://127.0.0.1:54069")
